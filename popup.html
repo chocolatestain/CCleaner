@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 200px;
+      padding: 24px 18px;
+      font-family: 'Segoe UI', 'Apple SD Gothic Neo', 'Malgun Gothic', Arial, sans-serif;
+      background: #f7f9fb;
+      border-radius: 18px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    }
+    
+    .header {
+      text-align: center;
+      margin-bottom: 22px;
+    }
+    
+    .header h1 {
+      margin: 0;
+      color: #222;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    
+    .toggle-section {
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border-radius: 12px;
+      padding: 14px 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    
+    .toggle-label {
+      font-size: 13px;
+      color: #333;
+      font-weight: 500;
+    }
+    
+    .power-switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 34px;
+      margin-left: 16px;
+      vertical-align: middle;
+    }
+    
+    .power-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(16px);
+    }
+    
+    .stats {
+      margin-top: 18px;
+      padding: 16px 18px;
+      background: #fff;
+      border-radius: 12px;
+      font-size: 14px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .stats-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .stats-label {
+      color: #666;
+      font-size: 13px;
+    }
+    
+    .stats-value {
+      font-weight: bold;
+      color: #222;
+      font-size: 15px;
+    }
+    
+    .save-btn {
+      width: 100%;
+      padding: 12px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    
+    .save-btn:hover {
+      background: #45a049;
+    }
+    
+    .save-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    
+    .help-text {
+      font-size: 11px;
+      color: #666;
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+    
+    .status-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    
+    .status-connected {
+      background: #4CAF50;
+    }
+    
+    .status-disconnected {
+      background: #f44336;
+    }
+    
+    .reset-btn {
+      width: 100%;
+      padding: 8px;
+      background: #ff9800;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+      margin-top: 10px;
+    }
+    
+    .reset-btn:hover {
+      background: #f57c00;
+    }
+    
+    .setting {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(90deg, #2196F3 60%, #42a5f5 100%);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      margin-top: 22px;
+      box-shadow: 0 2px 8px rgba(33,150,243,0.08);
+      transition: background 0.2s;
+    }
+    
+    .view-blocked-btn:hover {
+      background: linear-gradient(90deg, #1976D2 60%, #2196F3 100%);
+    }
+    
+    #apiKeyBanner {
+      margin-bottom: 18px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div style="text-align: left; margin-left:5px">
+      <span>Comment Sweeper</span><br>
+      <span style="font-size: 13px; color: #666;">v250701.1</span>
+    </div>
+  </div>
+  
+  <div class="toggle-section">
+    <span class="toggle-label">댓글 필터링</span>
+    <label class="power-switch">
+      <input type="checkbox" id="filterToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+  <div class="toggle-section">
+    <span class="toggle-label">개발자도구<br>로그 출력</span>
+    <label class="power-switch">
+      <input type="checkbox" id="consoleLogToggle">
+      <span class="slider"></span>
+    </label>
+  </div>
+  
+  <div class="stats" id="stats">
+    <div class="stats-row">
+      <span class="stats-label">차단된 댓글:</span>
+      <span class="stats-value" id="blockedComments">0</span>
+    </div>
+  </div>  
+  
+  <button class="setting" id="viewBlockedBtn">설정 페이지</button>
+  
+  <script src="popup.js"></script>
+</body>
+</html> 

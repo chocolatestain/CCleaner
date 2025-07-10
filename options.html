@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>댓글 필터 옵션</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .options-container {  margin: 36px auto; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px rgba(0,0,0,0.10); padding: 38px 28px; }
+    .option-group { margin-bottom: 32px; }
+    .option-group label { font-weight: bold; display: block; margin-bottom: 10px; font-size: 16px; color: #222; }
+    .option-group input[type="text"] { width: 95%; padding: 12px; border-radius: 8px; border: 1px solid #cfd8dc; font-size: 16px; background: #f7f9fb; margin-bottom: 8px; }
+    .option-group button { margin-right: 8px; padding: 10px 18px; border-radius: 8px; border: none; background: linear-gradient(90deg, #2196F3 60%, #42a5f5 100%); color: #fff; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 2px 8px rgba(33,150,243,0.08); transition: background 0.2s; }
+    .option-group button:hover { background: linear-gradient(90deg, #1976D2 60%, #2196F3 100%); }
+    .blocked-table {
+      width: 100%;
+      table-layout: fixed;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 14px;
+      font-size: 15px;
+      background: #fafbfc;
+      border-radius: 10px;
+      overflow: auto;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      margin-bottom: 32px;
+    }
+    th, td {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      border-bottom: 1px solid #e3e6ea;
+      padding: 12px 10px;
+      text-align: left;
+      vertical-align: middle;
+    }
+    th {
+      background: #f1f3f6;
+      font-weight: bold;
+      font-size: 15px;
+      color: #222;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    th.channel-id, td.channel-id {
+      width: 10%;
+      max-width: 120px;
+    }
+    .empty-msg { color: #888; text-align: center; margin: 24px 0; font-size: 15px; }
+    td.comment-cell {
+      white-space: pre-line;
+      line-height: 1.5;
+      font-size: 15px;
+      background: #fff;
+      max-width: none;
+      overflow: visible;
+      text-overflow: initial;
+      display: table-cell;
+      cursor: auto;
+    }
+    td.video-link-cell {
+      max-width: 220px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    td.video-link-cell a {
+      color: #2196F3;
+      text-decoration: underline;
+      font-size: 15px;
+      word-break: break-all;
+    }
+    .unblockBtn {
+      padding: 6px 14px;
+      font-size: 14px;
+      border-radius: 6px;
+      background: #2196F3;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin: 0 0 0 0;
+      display: block;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .unblockBtn:hover {
+      background: #1976D2;
+    }
+    @media (max-width: 900px) {
+      .options-container { padding: 12px 2px; }
+      th, td { font-size: 13px; padding: 8px 4px; }
+      td.comment-cell { max-width: 200px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="options-container">
+    <h2>AI 댓글 필터 옵션</h2>
+    <div class="option-group">
+      <label for="apiKey">Gemini API 키</label>
+      <input type="text" id="apiKey" placeholder="API 키를 입력하세요" autocomplete="off" />
+      <button id="saveApiKeyBtn">저장</button>
+      <button id="resetBlockedBtn">차단 목록 초기화</button>
+      <span id="apiStatus" class="status-indicator"></span>
+      <div class="help-text" style="margin-top:8px; font-size:13px; color:#555;">
+        <strong>API 키 발급 방법:</strong><br>
+        1. <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:#1976D2;text-decoration:underline;">Google AI Studio</a>에 로그인합니다.<br>
+        2. 상단 메뉴에서 <b>API 키</b> 메뉴를 클릭합니다.<br>
+        3. <b>새 API 키 만들기</b>를 눌러 키를 생성한 뒤, 복사하여 위 입력란에 붙여넣으세요.<br>
+      </div>
+    </div>
+    <div class="option-group">
+      <h3>차단된 댓글 목록</h3>
+      <div id="blockedListContainer">
+        <div class="empty-msg" id="emptyBlockedMsg">차단된 댓글이 없습니다.</div>
+        <table class="blocked-table" id="blockedTable" style="display:none;">
+          <thead>
+            <tr>
+              <th style="width: 30%;">댓글 내용</th>
+              <th>작성자</th>
+              <th style="max-width: 10%;">채널 ID</th>
+              <th>영상 링크</th>
+              <th>차단 시각</th>
+              <th>차단 해제</th>
+            </tr>
+          </thead>
+          <tbody id="blockedTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="option-info">
+      <p>모든 정보는 브라우저 외에는 저장되지 않습니다.<br>API 키는 Gemini AI 댓글 판별에만 사용됩니다.</p>
+    </div>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html> 

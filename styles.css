@@ -1,0 +1,55 @@
+/* AI 댓글 배지 스타일 */
+.ai-comment-badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: linear-gradient(45deg, #ff4444, #ff6b6b);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: bold;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  animation: badgePulse 2s infinite;
+}
+
+@keyframes badgePulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* 토글 버튼 스타일 */
+#ai-filter-toggle {
+  margin: 10px 0;
+  text-align: center;
+}
+
+#ai-toggle-btn {
+  background: linear-gradient(45deg, #4CAF50, #45a049);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+#ai-toggle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+#ai-toggle-btn:active {
+  transform: translateY(0);
+}
+
+/* 테스트용 스타일 */
+.test-comment {
+  border: 2px dashed #ff4444 !important;
+  background: #fff3cd !important;
+} 

@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "CCleaner",
+  "version": "1.0.0",
+  "description": "Gemini AI 기반 유튜브 AI 댓글 탐지 및 숨김 처리",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://www.youtube.com/*",
+    "https://generativelanguage.googleapis.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content-script.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "AI 댓글 필터"
+  },
+   "options_page": "options.html",
+   "icons": {
+    "16": "icon16.png"
+  }
+} 
