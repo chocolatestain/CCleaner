@@ -1,7 +1,5 @@
-# CCleaner
+# CSweeper
 
-
-## Comment Cleaner 
 유튜브 AI 댓글 자동 필터링 크롬 확장 프로그램
 
 ## 주요 기능
